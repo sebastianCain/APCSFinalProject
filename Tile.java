@@ -17,7 +17,7 @@ public class Tile extends Rectangle {
 	public Tile(int x, int y) {
 		super(x,y);
         
-		int sideLength = 45;
+		int sideLength = MinesweeperApp._sl;
 		setSize(sideLength,sideLength);
 		setLocation(x,y);
         setColor(Color.white);
@@ -36,7 +36,7 @@ public class Tile extends Rectangle {
     public Tile(int x, int y, int adjacentMines) {
         super(x,y);
         
-        int sideLength = 45;
+        int sideLength = MinesweeperApp._sl;
         setSize(sideLength,sideLength);
         setLocation(x,y);
         setColor(Color.white);
@@ -61,15 +61,19 @@ public class Tile extends Rectangle {
     public int getAdjMines() {
         return _adjacentMines;
     }
-    
+	
+	public void setTileImage(String s) {
+		_image = null;
+		_image = new TileImage(s, getX(), getY());
+    }
     // This function "flips" tiles by changing the image property.
     public void flipTile() {
         if (!_isFaceUp) {
             if (_isMine) {
                 _image.hide();
-                _image = new TileImage("./images/mine.png", getX(), getY());
+                setTileImage("./images/mine.png");
             } else {
-                _image = new TileImage("./images/" + _adjacentMines + ".png", getX(), getY());
+                setTileImage("./images/" + _adjacentMines + ".png");
             }
             _isFaceUp = true;
         }
@@ -78,13 +82,17 @@ public class Tile extends Rectangle {
     // Same for flagging, except you can toggle.
     public void flagTile() {
         if (!_isFlagged) {
-            _image = new TileImage("./images/flag.png", getX(), getY());
+            setTileImage("./images/flag.png");
             _isFlagged = true;
         } else {
-            _image = new TileImage("./images/tile.png", getX(), getY());
+            setTileImage("./images/tile.png");
             _isFlagged = false;
         }
     }
+	
+	public void invTile() {
+		if (!_isFaceUp)	setTileImage("./images/tile_inv.png");
+	}
 }
 		
 		

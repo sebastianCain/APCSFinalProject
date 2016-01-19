@@ -6,6 +6,7 @@ public class MinesweeperApp extends Frame {
 
     private static boolean[][] _board;
     public static Tile[][] _tiles;
+	public static int _sl;
     
     public MinesweeperApp() {
     	super();
@@ -13,7 +14,7 @@ public class MinesweeperApp extends Frame {
         // The board is defined as a matrix of 14x10, with booleans defining if the tile at that position is a mine or not.
         _board = new boolean[14][10];
         _tiles = new Tile[14][10];
-        
+        _sl = 50;
         createBoard();
     }
     
@@ -33,10 +34,10 @@ public class MinesweeperApp extends Frame {
             for (int j = 0; j < 10; j++) {
                 // The tiles get instantiated and added to the tile matrix
                 if (getBV(i,j)) {
-                    Tile newTile = new Tile(i*50, j*50);
+                    Tile newTile = new Tile(i*MinesweeperApp._sl, j*MinesweeperApp._sl);
                     _tiles[i][j] = newTile;
                 } else {
-                    Tile newTile = new Tile(i*50, j*50, getAdj(i,j));
+                    Tile newTile = new Tile(i*MinesweeperApp._sl, j*MinesweeperApp._sl, getAdj(i,j));
                     _tiles[i][j] = newTile;
                 }
             }
