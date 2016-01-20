@@ -8,23 +8,23 @@ public class TileImage extends Image {
     
     public TileImage(String i, int x, int y) {
         super(i);
-        setSize(MinesweeperApp._sl,MinesweeperApp._sl);
+        setSize(MinesweeperApp._currentBoard._sl,MinesweeperApp._currentBoard._sl);
         setLocation(x, y);
         _x = x;
         _y = y;
     }
     
 	public void mousePressed(MouseEvent e) {
-		MinesweeperApp._tiles[_x/MinesweeperApp._sl][_y/MinesweeperApp._sl].invTile();
+		MinesweeperApp._currentBoard._tiles[_x/MinesweeperApp._currentBoard._sl][_y-100/MinesweeperApp._currentBoard._sl].invTile();
 	}
 
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == 1) { // If left click
             // This accesses the tiles matrix of the app, selects the tile for this image, and calls its fliptile function
-            MinesweeperApp._tiles[_x/MinesweeperApp._sl][_y/MinesweeperApp._sl].flipTile();
+            MinesweeperApp._currentBoard._tiles[_x/MinesweeperApp._currentBoard._sl][_y-100/MinesweeperApp._currentBoard._sl].flipTile();
         } else if (e.getButton() == 3) {
             // Same here but for flagging
-            MinesweeperApp._tiles[_x/MinesweeperApp._sl][_y/MinesweeperApp._sl].flagTile();
+            MinesweeperApp._currentBoard._tiles[_x/MinesweeperApp._currentBoard._sl][_y-100/MinesweeperApp._currentBoard._sl].flagTile();
         }
     }
 }

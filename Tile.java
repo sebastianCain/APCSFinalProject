@@ -17,7 +17,7 @@ public class Tile extends Rectangle {
 	public Tile(int x, int y) {
 		super(x,y);
         
-		int sideLength = MinesweeperApp._sl;
+        int sideLength = MinesweeperApp._currentBoard._sl;
 		setSize(sideLength,sideLength);
 		setLocation(x,y);
         setColor(Color.white);
@@ -36,7 +36,7 @@ public class Tile extends Rectangle {
     public Tile(int x, int y, int adjacentMines) {
         super(x,y);
         
-        int sideLength = MinesweeperApp._sl;
+        int sideLength = MinesweeperApp._currentBoard._sl;
         setSize(sideLength,sideLength);
         setLocation(x,y);
         setColor(Color.white);
