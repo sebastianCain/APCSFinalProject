@@ -83,19 +83,20 @@ public class Tile extends Rectangle {
 	// If it is, do nothing. 
     public void flipTile() {
 		 
-		 if (!_isFaceUp && !_isFlagged){
+        if (!_isFaceUp && !_isFlagged){
 			
 			 //ends the game if true
-      	if (_isMine) {
-         	_image.hide();
-         	setTileImage("./images/mine.png");
-				Rectangle coverScreen = new Rectangle(0,100);
-				int xSize= MinesweeperApp._currentBoard._x * 50;
-				int ySize= MinesweeperApp._currentBoard._y * 50;
-				coverScreen.setSize(xSize,ySize);
-	 			coverScreen.setFillColor(null);
-				coverScreen.setFrameColor(null);
-       	} 
+            
+            if (_isMine) {
+                _image.hide();
+                setTileImage("./images/mine.png");
+                Rectangle coverScreen = new Rectangle(0,100);
+                int xSize= MinesweeperApp._currentBoard._x * 50;
+                int ySize= MinesweeperApp._currentBoard._y * 50;
+                coverScreen.setSize(xSize,ySize);
+                coverScreen.setFillColor(null);
+                coverScreen.setFrameColor(null);
+            }
 			
 			else if(_adjacentMines == 0){
 	   		setTileImage("./images/" + _adjacentMines + ".png");
@@ -123,22 +124,19 @@ public class Tile extends Rectangle {
         if (!_isFlagged && !_isFaceUp) {
             setTileImage("./images/flag.png");
             _isFlagged = true;
-			MinesweeperApp._currentCounter._flagged++;
-				if (_isMine)
-					MinesweeperApp._currentBoard._crctFlags++;
+            MinesweeperApp._currentCounter.updateNumFlagged(+1);
+            if (_isMine) MinesweeperApp._currentBoard._crctFlags++;
 
-		  }
-		  else if (!_isFaceUp){
+        } else if (!_isFaceUp){
             setTileImage("./images/tile.png");
             _isFlagged = false;
-			MinesweeperApp._currentCounter._flagged--;
-				if (_isMine)
-					MinesweeperApp._currentBoard._crctFlags--;	
-			}
+			MinesweeperApp._currentCounter.updateNumFlagged(-1);
+            if (_isMine) MinesweeperApp._currentBoard._crctFlags--;	
+        }
 		//System.out.println(MinesweeperApp._currentBoard._flagged);
    }
 		 
-
+    
 	
 	public void invTile() {
 		if (!_isFaceUp && !_isFlagged)	
@@ -159,13 +157,13 @@ public class Tile extends Rectangle {
       x = x/MinesweeperApp._currentBoard._sl;
       y = (y-100)/MinesweeperApp._currentBoard._sl;
 		for (int i = Math.max(x-1,0); i <= Math.min(x+1,(MinesweeperApp._currentBoard._x)-1); i++) {
-      	for (int j = Math.max(y-1,0); j <= Math.min(y+1,(MinesweeperApp._currentBoard._y)-1); j++) {
-         	MinesweeperApp._currentBoard._tiles[i][j]._isFlagged = false;
+            for (int j = Math.max(y-1,0); j <= Math.min(y+1,(MinesweeperApp._currentBoard._y)-1); j++) {
+                MinesweeperApp._currentBoard._tiles[i][j]._isFlagged = false;
 				MinesweeperApp._currentBoard._tiles[i][j].flipTile();
-         }
-      }
+            }
+        }
 	}
-
+    
 }
 		
 		

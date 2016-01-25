@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent;
 
 public class Counter {
 
-	protected int _flagged;
+	public int _flagged;
 
     private ConversationBubble _bubble;
 
@@ -25,6 +25,10 @@ public class Counter {
         _hundredsPlace = new Image("./"+ (_flagged % 1000)  "/tile.png",350,10);
         */
     }
-
+    
+    public void updateNumFlagged(int f) {
+        _flagged += f;
+        _bubble.setText(""+_flagged);
+    }
     
 }
