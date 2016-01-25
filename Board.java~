@@ -1,25 +1,19 @@
 import wheels.users.*;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 public class Board extends Rectangle {
     
-  	private boolean[][] _board;
-  	public Tile[][] _tiles;
+    private boolean[][] _board;
+    public Tile[][] _tiles;
     
     public int _sl;
-  	public int _x;
+    public int _x;
     public int _y;
+	public int _firstX;
+	public int _firstY;
 
-
-    private Counter _counter;
-
-	public int _crctFlags; //number of mines and flagged
-	public int _nonMineTiles; //tiles that aren't mines
-	public int _mines; //number of mines on the board
-    //public int _flagged;//number of flags placed
-    
+	public int _crctFlags; //for use in toolbar
 
 	public boolean _isFirstClick;
     
@@ -49,43 +43,39 @@ public class Board extends Rectangle {
         _tiles = new Tile[_x][_y];
         
 	}
+
+	public void numFlagged(){
+
+        for (int i = 0; i < _x; i++) {
+            for (int j = 0; j < _y; j++) {
+                 Tile newTile = new Tile(i*_sl, j*_sl+100, getAdj(i,j));
+                 _tiles[i][j] = newTile;
+            }
+         }
+   	}
+    
+	public void crctFlags(){
+        for (int i = 0; i < _x; i++) {
+            for (int j = 0; j < _y; j++) {
+                 if (_tiles[i][j].getMineAndFlagged()) _crctFlags++;
+            }
+         }
+   	}
 	
-	
-	public void fakeLayout(){      	 
-   	for (int i = 0; i < _x; i++) {  
-			for (int j = 0; j < _y; j++) {            
-				Tile newTile = new Tile(i*_sl, j*_sl+100, 0);
-        	 	_tiles[i][j] = newTile;
-     		}	 
-		}
+	//accessor method for crctFlags
+	public int getCrctFlags(){
+		return _crctFlags;
 	}
 	
-	public void layout(int x, int y) {
-		
-		//Declare which x and y are restricted so that we don't place mines on them
-		ArrayList<Integer> surroundX = new ArrayList<Integer>();
-		surroundX.add(x-1);
-		surroundX.add(x);
-		surroundX.add(x+1);
-		
-		ArrayList<Integer> surroundY = new ArrayList<Integer>();
-		surroundY.add(y-1);
-		surroundY.add(y);
-		surroundY.add(y+1);
-		
-		//prevents invTile() from calling this function again
-	 	_isFirstClick = false;
-		
-		_crctFlags = 0; //correct flags, meaning if the user flags a tile that has a mine,it's a correct flag.
-		_nonMineTiles = 0; //initialize
-			
+	
+	public void layout() {
+
         // This nested loop creates the board with mines in random places, with the percent chance of a tile being a mine at 20%
         for (int i = 0; i < _x; i++) {
             for (int j = 0; j < _y; j++) {
                 double r = Math.random();
                 boolean isMine = (r < .2);
-					 if (!(surroundX.contains(i) && surroundY.contains(j)))
-                	_board[i][j] = isMine;
+                _board[i][j] = isMine;
             }
         }
        
@@ -96,15 +86,12 @@ public class Board extends Rectangle {
                 if (getBV(i,j)) {
                     Tile newTile = new Tile(i*_sl, j*_sl+100);
                     _tiles[i][j] = newTile;
-						  _mines++;
-                } 
-					 else {
+                } else {
                     Tile newTile = new Tile(i*_sl, j*_sl+100, getAdj(i,j));
                     _tiles[i][j] = newTile;
-						  _nonMineTiles++; //counts number of non-mine tiles
                 }
             }
-        }		  
+        }
     }
     
     public boolean getBV(int x, int y) {
@@ -124,15 +111,4 @@ public class Board extends Rectangle {
         }
         return total;
     }
-
-    public void incrementCounter(){
-        _counter._flagged++;
-    }
-
-    public void decrementCounter(){
-        _counter._flagged--;
-    }
-
-
-
 }

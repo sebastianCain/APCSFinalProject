@@ -13,8 +13,6 @@ public class TileImage extends Image {
         _x = x/MinesweeperApp._currentBoard._sl;
         _y = (y-100)/MinesweeperApp._currentBoard._sl;
     }
-
-	
     
 	public void mousePressed(MouseEvent e) {
 		MinesweeperApp._currentBoard._tiles[_x][_y].invTile();
